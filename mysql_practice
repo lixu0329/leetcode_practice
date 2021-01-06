@@ -9,3 +9,14 @@
 1587:select u.name,r.balance from
       (select t.account,sum(t.amount) as balance  from transactions  t group by t.account having sum(t.amount)>10000 ) r
       left join users u on u.account=r.account                                                                     533 ms    31.64%
+1069:select s.product_id,sum(s.quantity) as total_quantity from sales s group by s.product_id                      881 ms    39.68%
+1303:select e.employee_id,t.team_size from employee  e left join 
+     (select team_id,count(1) as team_size  from employee group by team_id  ) t on e.team_id=t.team_id             203 ms    64.05%
+1571:select r.name as warehouse_name,sum(mul) as volume from
+     (select w.name,w.product_id,w.units*p.width*p.length*p.height as mul from warehouse  w
+     left join products p on w.product_id=p.product_id ) r group by name                                           464 ms    22.97%
+
+1082:select re.seller_id from (select s.seller_id,sum(s.price) as sum_price from sales s group by s.seller_id) re where re.sum_price=
+     (select r.sum_price from
+     (select s.seller_id,sum(s.price) as sum_price from sales s group by s.seller_id ) r
+     order by r.sum_price desc limit 1)                                                                            835 ms    86.62%
