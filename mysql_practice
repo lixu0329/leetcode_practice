@@ -1,2 +1,11 @@
 1378:select ifnull(i.unique_id,null) as unique_id,e.name from Employees e left join EmployeeUNI i on e.id=i.id
 619:select ifnull(max(temp.num),null) as num from(select num from my_numbers group by num having count(num)=1) temp
+1068:select p.product_name,s.year,s.price from Sales s left join Product p on s.product_id=p.product_id
+1350:select s.id,s.name from students s where not exists (select id from departments where id =s.department_id)    747 ms    7.82%
+     select id, name from students where department_id not in  (select id from departments)                        641 ms    23.63%
+1581:select v.customer_id,count(1) as count_no_trans  from visits v where visit_id not in (
+        select visit_id from transactions t 
+      ) group by v.customer_id                                                                                     891 ms    69.06%
+1587:select u.name,r.balance from
+      (select t.account,sum(t.amount) as balance  from transactions  t group by t.account having sum(t.amount)>10000 ) r
+      left join users u on u.account=r.account                                                                     533 ms    31.64%
