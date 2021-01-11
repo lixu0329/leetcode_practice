@@ -20,3 +20,4 @@
      (select r.sum_price from
      (select s.seller_id,sum(s.price) as sum_price from sales s group by s.seller_id ) r
      order by r.sum_price desc limit 1)                                                                            835 ms    86.62%
+1527:select * from patients where conditions like 'DIAB1%' or conditions like '% DIAB1%'
